@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  {{ message }}
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+	</div>
+{% endfor %}
+
+<br/>
+<h2>Editar evento</h2>
+<br/>
+<div class="shadow p-3 mb-5 bg-body rounded">
+	<form method="POST">
+		{{ form.hidden_tag() }}
+
+		{{ form.title.label(class="form-label") }}
+
+		{{ form.title(class="form-control") }}
+		<br/>
+		{{ form.data_evento.label(class="form-label") }}
+
+		{{ form.data_evento(class="form-control")}}
+		<br/>
+		{{ form.hora_evento.label(class="form-label") }}
+
+		{{ form.hora_evento(class="form-control")}}
+		<br/>
+		{{ form.endereco.label(class="form-label") }}
+
+		{{ form.endereco(class="form-control")}}
+		<br/>
+
+		{{ form.bairro.label(class="form-label") }}
+
+		{{ form.bairro(class="form-control")}}
+		<br/>
+		{{ form.content.label(class="form-label") }}
+
+		{{ form.content(class="form-control", rows="10") }}
+		<br/>
+
+		
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+	{{ ckeditor.load() }}
+ 	{{ ckeditor.config(name='content') }}
+
+	
+</div>
+
+<a href="{{ url_for('posts')}}" class="btn btn-outline-secondary btn-sm">Voltar aos eventos</a>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+h1 {
+	color: darkblue;
+	font-size:60px;
+}
+
+body {
+	background: #f4f4f4;
+}
+
+#demo{
+	font-size: 12px;
+	color: darkblue;
+}
+.small {
+  zoom: 75%;
+}
+.normal {
+  zoom: normal;
+}
+.big {
+  zoom: 2.5;
+}
+p:hover {
+  zoom: unset;
+}

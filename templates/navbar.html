@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <a class="navbar-brand" href="{{ url_for('index') }}">Levando Saúde!<i class='fas fa-running'></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('user', name='John')}}">Perfil</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('name')}}">Name</a>
+        </li>
+        -->
+        {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('dashboard')}}">Perfil</a>
+          </li>
+
+          {% if current_user.id == 1 %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin')}}">Admin</a>
+          </li>
+          {% endif %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout')}}" style="color:red">Sair</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('add_user')}}" style="color:green">Registrar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login')}}" style="color:green">Entrar</a>
+          </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('add_post')}}">Adicionar Evento</a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('posts')}}">Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('corridas')}}">Corridas</a>
+        </li>
+
+
+        
+      </ul>
+        <button id="zoom">Restaurar zoom </button>
+        <button id="zoomin">Zoom +</button></li>
+      <form method="POST" action="{{ url_for('search')}}" class="d-flex">
+        {{ form.hidden_tag() }}
+        <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar" name="searched">
+        <button class="btn btn-outline-secondary" type="submit">Procurar</button>
+      </form>
+    </div>
+  </div>
+</nav>

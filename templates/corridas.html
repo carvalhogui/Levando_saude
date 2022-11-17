@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!--<h1>Corridas em SP nos próximos dias!</h1>
+{% for i in data %}
+   {{ i|safe }}
+{% endfor %}
+-->
+<h1>Calendário Eventos</h1>
+{% for i in data %}
+   {{ i|safe }}
+{% endfor %}
+
+{% endblock %}
