@@ -77,8 +77,11 @@ def corridas():
 	ativo_calendario = soup2.find("div", {"class": "col list-events"})'''
 	return render_template('corridas.html', data=tag_list)
 
+@app.route('/equipamentos_publicos')
+def equipamentos_publicos():
+	return render_template('equipamentos_publicos.html')
 
-# Create Search Function
+# Cria função busca
 @app.route('/search', methods=["POST"])
 def search():
 	form = SearchForm()
