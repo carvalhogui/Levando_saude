@@ -21,8 +21,8 @@ app = Flask(__name__)
 ckeditor = CKEditor(app)
 # Add Database
 # SQLite
-app.config['SQLALCHEMY_DATABASE_URI']='postgres://avpvseskedvzfc:ff06b2ff14b73013376ea575dd03044c81ed098f945ba37a480fafb38c59c820@ec2-52-72-56-59.compute-1.amazonaws.com:5432/d7luh1grdsljvv'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+#app.config['SQLALCHEMY_DATABASE_URI']='postgres://avpvseskedvzfc:ff06b2ff14b73013376ea575dd03044c81ed098f945ba37a480fafb38c59c820@ec2-52-72-56-59.compute-1.amazonaws.com:5432/d7luh1grdsljvv'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # Secret Key!
 app.config['SECRET_KEY'] = "my super secret key that no one is supposed to know"
 # Inicia db
