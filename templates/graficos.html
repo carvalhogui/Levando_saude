@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Objetivo</h1>
+<p>O principal objetivo desse estudo é identificar o(s) perfil(is) dos usuários que utilizam os equipamentos em praças/lugares públicos.</p>
+<p>Foram analisados 100 registros, com informações como gênero, renda, escolaridade, idade e preferência de horário dos equipamentos.</p>
+<p>A seguir estão alguns dados a respeito do estudo e, ao final, estão os resultados do algoritmo DBSCAN, utilizado para a análise dos dados e identificação dos grupos dentro da base de dados.</p>
+<p>  </p>
+<p>  </p>
+<style>
+  table {
+    position: relative;
+    text-align: center;
+  }
+
+  caption {
+    position: absolute;
+    top: -30px; /* Ajuste esse valor conforme necessário */
+    left: 0;
+    right: 0;
+    font-weight: bold;
+  }
+</style>
+
+<table>
+  <caption>Distribuição de Gênero</caption>
+  <tr>
+    <td>
+      <img src="data:image/png;base64,{{ image_base64 }}" alt="Gráfico">
+    </td>
+  </tr>
+</table>
+<p>   </p>
+<table>
+  <caption>Distribuição de Idade</caption>
+  <tr>
+    <td>
+      <img src="data:image/png;base64,{{ image_base64_idade }}" alt="Gráfico">
+    </td>
+  </tr>
+</table>
+<p>   </p>
+<table>
+  <caption>Distribuição de Escolaridade</caption>
+  <tr>
+    <td>
+      <img src="data:image/png;base64,{{ image_base64_escolaridade }}" alt="Gráfico">
+    </td>
+  </tr>
+</table>
+<p>   </p>
+<p>   </p>
+<p>   </p>
+<p>   </p>
+<p>   </p>
+<p>   </p>
+<table>
+  <caption>Distribuição de preferência de horário para a prática dos exercícios</caption>
+  <tr>
+    <td>
+      <img src="data:image/png;base64,{{ image_base64_horario }}" alt="Gráfico">
+    </td>
+  </tr>
+</table>
+<p>   </p>
+<table>
+  <caption>Análise do algoritmo DBSCAN</caption>
+  <tr>
+    <td>
+      {{ html_table | safe}}
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+
+{% endblock %}

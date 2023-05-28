@@ -13,6 +13,11 @@ import uuid as uuid
 import os
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+from dados_pesquisa import df, df_original
+import textwrap
 
 
 # Cria a instância
@@ -32,6 +37,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 # Login
 login_manager = LoginManager()
@@ -81,6 +87,97 @@ def corridas():
 @app.route('/equipamentos_publicos')
 def equipamentos_publicos():
 	return render_template('equipamentos_publicos.html')
+
+@app.route('/graficos')
+def graficos():
+	distribuicao_sexo = df_original['sexo'].value_counts()
+
+	# Gráfico de pizza para a distribuição de sexo
+	plt.figure(figsize=(6, 6))
+	plt.pie(distribuicao_sexo, labels=distribuicao_sexo.index, autopct='%1.1f%%')
+	#plt.title('Distribuição de Sexo')
+
+	# Salvar o gráfico em um buffer de bytes
+	buffer = BytesIO()
+	plt.savefig(buffer, format='png')
+	buffer.seek(0)
+
+	# Converter o gráfico em formato base64
+	image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+	#idade
+	distribuicao_idade = df_original['idade'].value_counts()
+
+	# Gráfico de pizza para a distribuição de sexo
+	plt.figure(figsize=(10, 6))
+	plt.bar(distribuicao_idade.index, distribuicao_idade.values)
+	#plt.title('Distribuição de Idade')
+
+	# Salvar o gráfico em um buffer de bytes
+	buffer1 = BytesIO()
+	plt.savefig(buffer1, format='png')
+	buffer1.seek(0)
+
+	# Converter o gráfico em formato base64
+	image_base64_idade = base64.b64encode(buffer1.getvalue()).decode('utf-8')
+
+	# Escolaridade
+	distribuicao_escolaridade = df_original['nivel_escolaridade'].value_counts()
+
+	# Gráfico de barras para a distribuição de nível de escolaridade
+	plt.figure(figsize=(10, 6))
+
+	plt.bar(distribuicao_escolaridade.index, distribuicao_escolaridade.values)
+	#plt.title('Distribuição de Nível de Escolaridade')
+	wrapped_labels = [textwrap.fill(label, 11) for label in distribuicao_escolaridade.index]
+	plt.xticks(range(len(distribuicao_escolaridade.index)), wrapped_labels, rotation=0, ha='center')
+	plt.tick_params(axis='x', labelsize=7)
+	buffer2 = BytesIO()
+	plt.savefig(buffer2, format='png')
+	buffer2.seek(0)
+
+	# Converter o gráfico em formato base64
+	image_base64_escolaridade = base64.b64encode(buffer2.getvalue()).decode('utf-8')
+
+	# Horario
+	distribuicao_horario = df_original['horario'].value_counts()
+
+	# Gráfico de barras para a distribuição de nível de escolaridade
+	plt.figure(figsize=(10, 6))
+	plt.bar(distribuicao_horario.index, distribuicao_horario.values)
+	#plt.title('Distribuição de Horario')
+	buffer3 = BytesIO()
+	plt.savefig(buffer3, format='png')
+	buffer3.seek(0)
+
+	# Converter o gráfico em formato base64
+	image_base64_horario = base64.b64encode(buffer3.getvalue()).decode('utf-8')
+
+	#clusters
+	#cluster_counts = df['cluster'].value_counts().sort_index()
+
+	#plt.bar(cluster_counts.index, cluster_counts.values)
+	#plt.xlabel('Cluster')
+	#plt.ylabel('Contagem')
+	#plt.title('Contagem de Registros em Cada Cluster')
+	#buffer4 = BytesIO()
+	#plt.savefig(buffer4, format='png')
+	#buffer4.seek(0)
+
+	# Converter o gráfico em formato base64
+	#image_base64_clusters = base64.b64encode(buffer4.getvalue()).decode('utf-8')
+
+	#tabela com estatísticas
+	grupos_desejados = [0,1,2,3,4,5]
+	summary_table = df.groupby('cluster').agg({'idade': ['mean', 'median', 'std', 'min', 'max'],
+											   'renda': ['mean', 'median', 'std', 'min', 'max']})
+	summary_table_filtrada = summary_table.loc[grupos_desejados]
+	html_table = summary_table_filtrada.to_html()
+
+
+	return render_template('graficos.html', image_base64=image_base64, image_base64_idade=image_base64_idade,
+						   image_base64_escolaridade=image_base64_escolaridade, image_base64_horario=image_base64_horario,
+							html_table=html_table)
 
 # Cria função busca
 @app.route('/search', methods=["POST"])
